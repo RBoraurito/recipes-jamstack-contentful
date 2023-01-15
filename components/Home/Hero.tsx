@@ -1,6 +1,15 @@
-import Link from "next/link"
+import Image from 'next/image'
+import Link from 'next/link'
 
-export const Hero = () => {
+interface HeroProps {
+  title: string
+  description: string
+  url: string
+  width: number
+  height: number
+}
+
+export const Hero = ({ title, url, description, width, height }: HeroProps) => {
   return (
     <section className="lg:relative">
       <div className="mx-auto w-full max-w-7xl pt-16 pb-20 text-center lg:py-48 lg:text-left">
@@ -10,7 +19,9 @@ export const Hero = () => {
             <span className="block text-indigo-600 xl:inline">recipe</span>
           </h1>
           <p className="mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
-            Here you will find all kinds of recipes. From the most simple to the most complex. You can also add your own recipes and share them with the community.
+            Here you will find all kinds of recipes. From the most simple to the
+            most complex. You can also add your own recipes and share them with
+            the community.
           </p>
           <div className="mt-10 sm:flex sm:justify-center lg:justify-start">
             <div className="rounded-md shadow">
@@ -33,10 +44,13 @@ export const Hero = () => {
         </div>
       </div>
       <div className="relative h-64 w-full sm:h-72 md:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-1/2">
-        <img
+        <Image
           className="absolute inset-0 h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
-          alt=""
+          src={url}
+          title={title}
+          alt={description}
+          width={width}
+          height={height}
         />
       </div>
     </section>

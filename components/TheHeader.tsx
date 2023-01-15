@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
@@ -27,15 +27,20 @@ export const TheHeader = () => {
             </Popover.Button>
           </div>
           <nav className="hidden space-x-10 md:flex">
-            <Link href="/recipes" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <Link
+              href="/recipes"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
               Recipes
             </Link>
-            <Link href="/blog" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            <Link
+              href="/blog"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
               Blog
             </Link>
           </nav>
-          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-          </div>
+          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0"></div>
         </div>
       </div>
 
@@ -48,7 +53,10 @@ export const TheHeader = () => {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <Popover.Panel focus className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden">
+        <Popover.Panel
+          focus
+          className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
+        >
           <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
@@ -65,11 +73,17 @@ export const TheHeader = () => {
             </div>
             <div className="space-y-6 py-6 px-5">
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                <Link href="/recipes" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                <Link
+                  href="/recipes"
+                  className="text-base font-medium text-gray-900 hover:text-gray-700"
+                >
                   Recipes
                 </Link>
 
-                <Link href="/blog" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                <Link
+                  href="/blog"
+                  className="text-base font-medium text-gray-900 hover:text-gray-700"
+                >
                   Blog
                 </Link>
               </div>
