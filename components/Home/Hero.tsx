@@ -16,7 +16,7 @@ export const Hero = ({ title, url, description, width, height }: HeroProps) => {
         <div className="px-6 sm:px-8 lg:w-1/2 xl:pr-16">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl">
             <span className="block xl:inline">Find your new favorite</span>{' '}
-            <span className="block text-indigo-600 xl:inline">recipe</span>
+            <span className="block text-primary-600 xl:inline">recipe</span>
           </h1>
           <p className="mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
             Here you will find all kinds of recipes. From the most simple to the
@@ -27,7 +27,7 @@ export const Hero = ({ title, url, description, width, height }: HeroProps) => {
             <div className="rounded-md shadow">
               <Link
                 href="/recipes"
-                className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-4 md:px-10 md:text-lg"
+                className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-8 py-3 text-base font-medium text-white hover:bg-primary-700 md:py-4 md:px-10 md:text-lg"
               >
                 Explore recipes
               </Link>
@@ -35,7 +35,7 @@ export const Hero = ({ title, url, description, width, height }: HeroProps) => {
             <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
               <Link
                 href="/recipes/new"
-                className="flex w-full items-center justify-center rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-indigo-600 hover:bg-gray-50 md:py-4 md:px-10 md:text-lg"
+                className="flex w-full items-center justify-center rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-primary-600 hover:bg-gray-50 md:py-4 md:px-10 md:text-lg"
               >
                 Add your own recipe
               </Link>

@@ -1,6 +1,8 @@
 import { Hero } from '@/components/Home/Hero'
+import { HomeRecipes } from '@/components/Home/Recipes'
 import { createApolloClient } from '@/lib/apolloClient'
 import { HomeQueryData, HOME_QUERY } from '@/queries/home'
+import { HOME_RECIPE_QUERY } from '@/queries/recipe'
 import { useQuery } from '@apollo/client'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -33,6 +35,7 @@ export default function Home() {
           height={heroImage.height}
         />
       )}
+      <HomeRecipes />
     </>
   )
 }
@@ -42,6 +45,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
   await client.query({
     query: HOME_QUERY,
+  })
+
+  await client.query({
+    query: HOME_RECIPE_QUERY,
   })
 
   return {
