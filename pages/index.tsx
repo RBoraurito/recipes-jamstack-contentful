@@ -1,7 +1,9 @@
 import { Hero } from '@/components/Home/Hero'
+import { HomePosts } from '@/components/Home/Posts'
 import { HomeRecipes } from '@/components/Home/Recipes'
 import { createApolloClient } from '@/lib/apolloClient'
 import { HomeQueryData, HOME_QUERY } from '@/queries/home'
+import { HOME_POST_QUERY } from '@/queries/post'
 import { HOME_RECIPE_QUERY } from '@/queries/recipe'
 import { useQuery } from '@apollo/client'
 import { GetStaticProps } from 'next'
@@ -36,6 +38,7 @@ export default function Home() {
         />
       )}
       <HomeRecipes />
+      <HomePosts />
     </>
   )
 }
@@ -43,13 +46,19 @@ export default function Home() {
 export const getStaticProps: GetStaticProps = async () => {
   const client = createApolloClient()
 
-  await client.query({
+  const home = client.query({
     query: HOME_QUERY,
   })
 
-  await client.query({
+  const homeRecipe = client.query({
     query: HOME_RECIPE_QUERY,
   })
+
+  const homePost = client.query({
+    query: HOME_POST_QUERY,
+  })
+
+  await Promise.all([home, homeRecipe, homePost])
 
   return {
     props: {
