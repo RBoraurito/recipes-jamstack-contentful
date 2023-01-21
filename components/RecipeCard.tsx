@@ -29,7 +29,7 @@ export const RecipeCard = ({ recipe }: { recipe: CardRecipe }) => {
                 href={`/recipes?tag=${slugify(tag.name)}`}
                 target="_blank"
                 key={tag.id}
-                className="hover:underline"
+                className="hover:underline mr-2"
               >
                 {tag.name}
               </Link>

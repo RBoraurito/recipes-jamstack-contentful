@@ -7,13 +7,13 @@ import {
   RecipeOrder,
   RECIPE_QUERY,
 } from '@/queries/recipe'
-import { RECIPES_PER_PAGE } from '@/values/recipes'
 import { useQuery } from '@apollo/client'
 import type { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { SortingHeader } from '@/components/SortingHeader'
 import { RECIPE_TAGS } from '@/queries/tag'
-import { useMemo } from 'react'
+import { pagination } from '@/values/pagination'
+import { Pagination } from '@/components/Pagination'
 
 const sortOptions = {
   'Most Recent': 'published_DESC',
@@ -27,8 +27,8 @@ const Recipes = () => {
   const { page, tag, order } = router.query
   const { data } = useQuery<HomeRecipeQuery>(RECIPE_QUERY, {
     variables: {
-      limit: RECIPES_PER_PAGE,
-      skip: page ? (Number(page) - 1) * RECIPES_PER_PAGE : 0,
+      limit: pagination.pageSize,
+      skip: page ? (Number(page) - 1) * pagination.pageSize : 0,
       order:
         RecipeOrder[order as keyof typeof RecipeOrder] ||
         RecipeOrder.published_DESC,
@@ -36,6 +36,7 @@ const Recipes = () => {
       notifyOnNetworkStatusChange: true,
     },
   })
+  console.log(page)
 
   return (
     <Container classNames="py-6">
@@ -58,6 +59,12 @@ const Recipes = () => {
             ))
           ))}
       </div>
+
+      <Pagination
+        total={data?.recipesCollection.total ?? 0}
+        className="mt-14"
+        currentPage={Number(page) || 1}
+      />
     </Container>
   )
 }
@@ -68,14 +75,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const client = createApolloClient()
 
   const { page, tag, order } = context.query
-  console.log(tag)
 
   await Promise.all([
     client.query({
       query: RECIPE_QUERY,
       variables: {
-        limit: RECIPES_PER_PAGE,
-        skip: page ? (Number(page) - 1) * RECIPES_PER_PAGE : 0,
+        limit: pagination.pageSize,
+        skip: page ? (Number(page) - 1) * pagination.pageSize : 0,
         order: order
           ? RecipeOrder[order as keyof typeof RecipeOrder]
           : RecipeOrder.published_DESC,

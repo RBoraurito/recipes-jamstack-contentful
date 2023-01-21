@@ -33,6 +33,7 @@ export const HOME_RECIPE_QUERY = gql`
 
 export interface HomeRecipeQuery {
   recipesCollection: {
+    total: number
     items: CardRecipe[]
   }
 }
@@ -70,6 +71,7 @@ export const RECIPE_QUERY = gql`
       order: $order
       where: { contentfulMetadata: { tags: { id_contains_all: $tags } } }
     ) {
+      total
       items {
         contentfulMetadata {
           tags {
