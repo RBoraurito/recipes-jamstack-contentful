@@ -1,5 +1,5 @@
 import type { PostCard as Props } from '@/queries/post'
-import { dateTime, displayDate } from '@/utils/date-formats'
+import { dateTime, displayDate } from '@/values/date-formats'
 import { slugify } from '@/utils/sluglify'
 import { format } from 'date-fns'
 

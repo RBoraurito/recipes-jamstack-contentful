@@ -1,5 +1,5 @@
 import { CardRecipe } from '@/queries/recipe'
-import { dateTime, displayDate } from '@/utils/date-formats'
+import { dateTime, displayDate } from '@/values/date-formats'
 import { slugify } from '@/utils/sluglify'
 import { format } from 'date-fns'
 import Image from 'next/image'
@@ -24,14 +24,14 @@ export const RecipeCard = ({ recipe }: { recipe: CardRecipe }) => {
       <div className="flex flex-1 flex-col justify-between bg-white p-6">
         <div className="flex-1">
           <p className="text-sm font-medium text-primary-600">
-            {recipe.tagsCollection.items.map((tag) => (
+            {recipe.contentfulMetadata.tags.map((tag) => (
               <Link
-                href={`/recipes?tag=${slugify(tag.tag)}`}
+                href={`/recipes?tag=${slugify(tag.name)}`}
                 target="_blank"
-                key={tag.tag}
+                key={tag.id}
                 className="hover:underline"
               >
-                {tag.tag}
+                {tag.name}
               </Link>
             ))}
           </p>

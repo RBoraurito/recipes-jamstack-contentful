@@ -23,8 +23,7 @@ export interface Author {
   contactLink: string
 }
 
-export interface Tag<M> {
-  tag: string
-  description: string
-  image: M
+export interface Tag {
+  id: string
+  name: string
 }

@@ -5,6 +5,12 @@ export const HOME_POST_QUERY = gql`
   query PostHomeQuery {
     postsCollection(limit: 4) {
       items {
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
+        }
         sys {
           firstPublishedAt
         }
@@ -20,11 +26,6 @@ export const HOME_POST_QUERY = gql`
         author {
           name
           contactLink
-        }
-        tagsCollection {
-          items {
-            tag
-          }
         }
         readingMinutes
       }
@@ -47,8 +48,8 @@ export interface PostCard {
     'title' | 'description' | 'url' | 'width' | 'height'
   >
   author: Author
-  tagsCollection: {
-    items: Pick<Tag<Media>, 'tag'>
+  contentfulMetadata: {
+    tag: Tag
   }
   readingMinutes: number
 }

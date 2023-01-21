@@ -5,6 +5,12 @@ export const HOME_RECIPE_QUERY = gql`
   query HomeRecipeQuery {
     recipesCollection(limit: 3) {
       items {
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
+        }
         title
         featuredImage {
           title
@@ -16,11 +22,6 @@ export const HOME_RECIPE_QUERY = gql`
         author {
           name
           contactLink
-        }
-        tagsCollection(limit: 3) {
-          items {
-            tag
-          }
         }
         sys {
           firstPublishedAt
@@ -43,8 +44,55 @@ export interface CardRecipe {
     'title' | 'description' | 'url' | 'width' | 'height'
   >
   author: Author
-  tagsCollection: {
-    items: Pick<Tag<Media>, 'tag'>[]
+  contentfulMetadata: {
+    tags: Tag[]
   }
   sys: Pick<Sys, 'firstPublishedAt'>
 }
+
+export enum RecipeOrder {
+  title_ASC = 'title_ASC',
+  title_DESC = 'title_DESC',
+  published_ASC = 'sys_firstPublishedAt_ASC',
+  published_DESC = 'sys_firstPublishedAt_DESC',
+}
+
+export const RECIPE_QUERY = gql`
+  query HomeRecipeQuery(
+    $limit: Int = 16
+    $skip: Int = 0
+    $order: [RecipesOrder] = sys_firstPublishedAt_DESC
+    $tags: [String] = []
+  ) {
+    recipesCollection(
+      limit: $limit
+      skip: $skip
+      order: $order
+      where: { contentfulMetadata: { tags: { id_contains_all: $tags } } }
+    ) {
+      items {
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
+        }
+        title
+        featuredImage {
+          title
+          description
+          url
+          width
+          height
+        }
+        author {
+          name
+          contactLink
+        }
+        sys {
+          firstPublishedAt
+        }
+      }
+    }
+  }
+`
