@@ -31,7 +31,6 @@ const Recipes = () => {
       notifyOnNetworkStatusChange: true,
     },
   })
-  console.log(page)
 
   return (
     <Container classNames="py-6">
@@ -71,27 +70,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { page, tag, order } = context.query
 
-  try {
-    await Promise.all([
-      client.query({
-        query: POST_QUERY,
-        variables: {
-          limit: pagination.pageSize,
-          skip: page ? (Number(page) - 1) * pagination.pageSize : 0,
-          order: order
-            ? PostOrder[order as keyof typeof PostOrder]
-            : PostOrder.published_DESC,
-          tags: tag ? (tag as string).split(',') : [],
-        },
-      }),
-      client.query({
-        query: RECIPE_TAGS,
-      }),
-    ])
-  } catch (error) {
-    console.error(error.networkError?.result?.errors)
-  }
-
+  await Promise.all([
+    client.query({
+      query: POST_QUERY,
+      variables: {
+        limit: pagination.pageSize,
+        skip: page ? (Number(page) - 1) * pagination.pageSize : 0,
+        order: order
+          ? PostOrder[order as keyof typeof PostOrder]
+          : PostOrder.published_DESC,
+        tags: tag ? (tag as string).split(',') : [],
+      },
+    }),
+    client.query({
+      query: RECIPE_TAGS,
+    }),
+  ])
 
   return {
     props: {
