@@ -36,7 +36,6 @@ const Recipes = () => {
       notifyOnNetworkStatusChange: true,
     },
   })
-  console.log(page)
 
   return (
     <Container classNames="py-6">
