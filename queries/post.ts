@@ -33,6 +33,13 @@ export const HOME_POST_QUERY = gql`
   }
 `
 
+export enum PostOrder {
+  title_ASC = 'title_ASC',
+  title_DESC = 'title_DESC',
+  published_ASC = 'sys_firstPublishedAt_ASC',
+  published_DESC = 'sys_firstPublishedAt_DESC',
+}
+
 export interface PostHomeQuery {
   postsCollection: {
     items: PostCard[]
@@ -49,7 +56,57 @@ export interface PostCard {
   >
   author: Author
   contentfulMetadata: {
-    tag: Tag
+    tags: Tag[]
   }
   readingMinutes: number
 }
+
+export interface PostQuery {
+  postsCollection: {
+    total: number
+    items: PostCard[]
+  }
+}
+
+export const POST_QUERY = gql`
+  query PostQuery(
+    $limit: Int = 9
+    $skip: Int = 0
+    $order: [PostsOrder] = sys_firstPublishedAt_DESC
+    $tags: [String] = []
+  ) {
+    postsCollection(
+      limit: $limit
+      skip: $skip
+      order: $order
+      where: { contentfulMetadata: { tags: { id_contains_all: $tags } } }
+    ) {
+      total
+      items {
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
+        }
+        sys {
+          firstPublishedAt
+        }
+        title
+        description
+        featuredImage {
+          url
+          title
+          description
+          width
+          height
+        }
+        author {
+          name
+          contactLink
+        }
+        readingMinutes
+      }
+    }
+  }
+`
