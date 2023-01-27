@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
+    './pages-fallback/**/*.{js,ts,jsx,tsx}',
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
@@ -33,7 +34,20 @@ module.exports = {
           50: '#F0F4F8',
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            'h1, h2, h3, h4, h5, h6': {
+              color: theme('colors.primary.800'),
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

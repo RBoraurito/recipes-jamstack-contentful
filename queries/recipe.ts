@@ -1,31 +1,13 @@
+import { RECIPE_CARD_FRAGMENT, RECIPE_FRAGMENT } from '@/fragments/Recipe'
 import { Author, Media, Sys, Tag } from '@/types/contentful/common'
 import { gql } from '@apollo/client'
 
 export const HOME_RECIPE_QUERY = gql`
+  ${RECIPE_CARD_FRAGMENT}
   query HomeRecipeQuery {
     recipesCollection(limit: 3) {
       items {
-        contentfulMetadata {
-          tags {
-            id
-            name
-          }
-        }
-        title
-        featuredImage {
-          title
-          description
-          url
-          width
-          height
-        }
-        author {
-          name
-          contactLink
-        }
-        sys {
-          firstPublishedAt
-        }
+        ...RecipeCard
       }
     }
   }
@@ -59,6 +41,7 @@ export enum RecipeOrder {
 }
 
 export const RECIPE_QUERY = gql`
+  ${RECIPE_CARD_FRAGMENT}
   query HomeRecipeQuery(
     $limit: Int = 16
     $skip: Int = 0
@@ -73,28 +56,85 @@ export const RECIPE_QUERY = gql`
     ) {
       total
       items {
-        contentfulMetadata {
-          tags {
-            id
-            name
-          }
-        }
-        title
-        featuredImage {
-          title
-          description
-          url
-          width
-          height
-        }
-        author {
-          name
-          contactLink
-        }
-        sys {
-          firstPublishedAt
-        }
+        ...RecipeCard
       }
     }
   }
 `
+
+export const SINGLE_RECIPE_QUERY = gql`
+  ${RECIPE_FRAGMENT}
+  query SingleRecipeQuery($slug: String!) {
+    recipesCollection(where: { slug: $slug }, limit: 1) {
+      items {
+        ...Recipe
+      }
+    }
+  }
+`
+
+export interface SingleRecipe {
+  recipesCollection: {
+    items: [
+      {
+        title: string
+        slug: string
+        featuredImage: Pick<
+          Media,
+          'title' | 'description' | 'url' | 'width' | 'height'
+        >
+        author: Author
+        contentfulMetadata: {
+          tags: Tag[]
+        }
+        sys: Pick<Sys, 'firstPublishedAt'>
+        recipe: {
+          json: any
+        }
+        relatedProductsCollection: {
+          items: Product[]
+        }
+      },
+    ]
+  }
+}
+
+export interface Product {
+  title: string
+  link: string
+  image: Pick<Media, 'url' | 'title' | 'description' | 'width' | 'height'>
+  price: number
+}
+
+export const RECIPE_TOTAL_QUERY = gql`
+  query RecipeTotalQuery {
+    recipesCollection {
+      total
+    }
+  }
+`
+
+export interface RecipeTotal {
+  recipesCollection: {
+    total: number
+  }
+}
+
+// Limit in 1 to try fallback
+export const RECIPE_SLUGS_QUERY = gql`
+  query RecipeSlugsQuery {
+    recipesCollection {
+      items {
+        slug
+      }
+    }
+  }
+`
+
+export interface RecipesSlugs {
+  recipesCollection: {
+    items: {
+      slug: string
+    }[]
+  }
+}
