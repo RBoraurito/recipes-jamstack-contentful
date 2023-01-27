@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-main {
+#__next {
   grid-template-rows: auto 1fr auto;
+  @apply grid min-h-screen;
 }

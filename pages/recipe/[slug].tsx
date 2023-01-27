@@ -99,12 +99,18 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const client = createApolloClient()
 
   try {
-    await client.query({
+    const recipe = await client.query<SingleRecipe>({
       query: SINGLE_RECIPE_QUERY,
       variables: {
         slug: context.params?.slug,
       },
     })
+
+    if (!recipe.data.recipesCollection.items.length) {
+      return {
+        notFound: true,
+      }
+    }
 
     return {
       props: {
