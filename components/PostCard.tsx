@@ -20,7 +20,7 @@ export const PostCard = ({ post }: { post: Props }) => {
       <p className="text-sm font-medium text-primary-600 mt-2">
         {post.contentfulMetadata.tags.map((tag) => (
           <Link
-            href={`/recipes?tag=${slugify(tag.name)}`}
+            href={`/blog?tag=${slugify(tag.name)}`}
             target="_blank"
             key={tag.id}
             className="hover:underline mr-2"
@@ -37,7 +37,7 @@ export const PostCard = ({ post }: { post: Props }) => {
       </p>
       <div className="mt-3">
         <Link
-          href={`/post/${slugify(post.title)}`}
+          href={`/blog/${slugify(post.title)}`}
           className="text-base font-semibold text-primary-600 hover:text-primary-500"
         >
           Read full story
